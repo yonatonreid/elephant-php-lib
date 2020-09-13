@@ -17,6 +17,15 @@ class Arrays
         return array_change_key_case($array, $case);
     }
 
+    public static function arrayChangeKeyCaseUnicode(array $array,int $case=CASE_LOWER):array{
+        $case = ($case == CASE_LOWER) ? MB_CASE_LOWER : MB_CASE_UPPER;
+        $ret=[];
+        foreach($array as $k => $v){
+            $ret[mb_convert_case($k,$case,"UTF-8")] = $v;
+        }
+        return $ret;
+    }
+
     public static function arrayChunk(array $array, int $size, bool $preserveKeys = false): array
     {
         return array_chunk($array, $size, $preserveKeys);
