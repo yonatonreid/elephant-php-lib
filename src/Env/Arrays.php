@@ -17,13 +17,31 @@ class Arrays
         return array_change_key_case($array, $case);
     }
 
+    public static function arrayChangeKeyCaseRecursive(array $array,int $case=CASE_LOWER):array{
+        return array_map(function($item,$case){
+            if(is_array($item)){
+                $item = static::arrayChangeKeyCaseRecursive($item,$case);
+            }
+            return $item;
+        },static::arrayChangeKeyCase($array,$case));
+    }
+
     public static function arrayChangeKeyCaseUnicode(array $array,int $case=CASE_LOWER):array{
         $case = ($case == CASE_LOWER) ? MB_CASE_LOWER : MB_CASE_UPPER;
         $ret=[];
         foreach($array as $k => $v){
-            $ret[mb_convert_case($k,$case,"UTF-8")] = $v;
+            $ret[Strings::mbConvertCase($k,$case,"UTF-8")] = $v;
         }
         return $ret;
+    }
+
+    public static function arrayChangeKeyRecursiveUnicode(array $array,int $case=CASE_LOWER):array{
+        return array_map(function($item,$case){
+            if(is_array($item)){
+                $item = static::arrayChangeKeyRecursiveUnicode($item,$case);
+            }
+            return $item;
+        },static::arrayChangeKeyCaseUnicode($array,$case));
     }
 
     public static function arrayChunk(array $array, int $size, bool $preserveKeys = false): array
