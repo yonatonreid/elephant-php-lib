@@ -1,0 +1,23 @@
+{
+  "name": "yonatonreid/elephant-php-lib",
+  "description": "Elephant PHP Library standardizes the php language into a framework",
+  "minimum-stability": "stable",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "yonatonreid",
+      "email": "yonatonreid@gmail.com"
+    }
+  ],
+  "support": {
+    "email": "yonatonreid@gmail.com"
+  },
+  "require": {
+    "phpunit/phpunit": "9.3.10"
+  },
+  "autoload": {
+    "psr-4": {
+      "Elephant\\": "src"
+    }
+  }
+}
