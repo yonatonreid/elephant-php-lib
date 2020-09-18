@@ -19,30 +19,28 @@ class Arrays
 
     public static function arrayChangeKeyCaseRecursive(array $array, int $case = CASE_LOWER): array
     {
-        return array_map(function ($item, $case) {
-            if (is_array($item)) {
+        return array_map(function ($item) use ($case) {
+            if (is_array($item))
                 $item = static ::arrayChangeKeyCaseRecursive($item, $case);
-            }
             return $item;
         }, static ::arrayChangeKeyCase($array, $case));
     }
 
-    public static function arrayChangeKeyCaseUnicode(array $array, int $case = CASE_LOWER): array
+    public static function arrayChangeKeyCaseUnicode(array $array, int $case = CASE_LOWER, string $encoding = "UTF-8"): array
     {
         $case = ($case == CASE_LOWER) ? MB_CASE_LOWER : MB_CASE_UPPER;
         $ret = [];
         foreach ($array as $k => $v) {
-            $ret[Strings ::mbConvertCase($k, $case, "UTF-8")] = $v;
+            $ret[Strings ::mbConvertCase($k, $case, $encoding)] = $v;
         }
         return $ret;
     }
 
     public static function arrayChangeKeyRecursiveUnicode(array $array, int $case = CASE_LOWER): array
     {
-        return array_map(function ($item, $case) {
-            if (is_array($item)) {
+        return array_map(function ($item) use ($case) {
+            if (is_array($item))
                 $item = static ::arrayChangeKeyRecursiveUnicode($item, $case);
-            }
             return $item;
         }, static ::arrayChangeKeyCaseUnicode($array, $case));
     }
