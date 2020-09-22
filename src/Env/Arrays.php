@@ -26,9 +26,8 @@ class Arrays
         }, static ::arrayChangeKeyCase($array, $case));
     }
 
-    public static function arrayChangeKeyCaseUnicode(array $array, int $case = CASE_LOWER, string $encoding = "UTF-8"): array
+    public static function arrayChangeKeyCaseUnicode(array $array, int $case = MB_CASE_LOWER, string $encoding = "UTF-8"): array
     {
-        $case = ($case == CASE_LOWER) ? MB_CASE_LOWER : MB_CASE_UPPER;
         $ret = [];
         foreach ($array as $k => $v) {
             $ret[Strings ::mbConvertCase($k, $case, $encoding)] = $v;
@@ -36,7 +35,7 @@ class Arrays
         return $ret;
     }
 
-    public static function arrayChangeKeyUnicodeRecursive(array $array, int $case = CASE_LOWER): array
+    public static function arrayChangeKeyUnicodeRecursive(array $array, int $case = MB_CASE_LOWER): array
     {
         return array_map(function ($item) use ($case) {
             if (is_array($item))

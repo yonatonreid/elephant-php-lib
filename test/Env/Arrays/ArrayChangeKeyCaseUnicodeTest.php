@@ -21,14 +21,14 @@ class ArrayChangeKeyCaseUnicodeTest extends TestCase
     {
         $expected = array("first" => 1, "yağ" => "Oil", "şeker" => "sugar");
         $actual = array("FIRST" => 1, "YAĞ" => "Oil", "ŞEKER" => "sugar");
-        $this -> assertEquals($expected, Arrays ::arrayChangeKeyCaseUnicode($actual, CASE_LOWER));
+        $this -> assertEquals($expected, Arrays ::arrayChangeKeyCaseUnicode($actual, MB_CASE_LOWER));
     }
 
     public function testArrayChangeKeyCaseUnicodeReturnsUpper()
     {
         $actual = array("FirSt" => 1, "yağ" => "Oil", "şekER" => "sugar");
         $expected = array("FIRST" => 1, "YAĞ" => "Oil", "ŞEKER" => "sugar");
-        $this -> assertEquals($expected, Arrays ::arrayChangeKeyCaseUnicode($actual, CASE_UPPER));
+        $this -> assertEquals($expected, Arrays ::arrayChangeKeyCaseUnicode($actual, MB_CASE_UPPER));
     }
 
     public function testArrayChangeKeyCaseUnicodeDefaultsLower()
@@ -45,4 +45,10 @@ class ArrayChangeKeyCaseUnicodeTest extends TestCase
         Arrays ::arrayChangeKeyCaseUnicode($expected);
     }
 
+    public function testArrayChangeKeyCaseUnicodeReturnsTitle()
+    {
+        $expected = ['Foo' => 1, 'Bar' => 2, 'Baz' => 3];
+        $actual = ['foO' => 1, 'bAR' => 2, 'BAZ' => 3];
+        $this -> assertEquals($expected, Arrays ::arrayChangeKeyCaseUnicode($actual, MB_CASE_TITLE));
+    }
 }
