@@ -49,6 +49,42 @@ class Arrays
         return array_chunk($array, $size, $preserveKeys);
     }
 
+    public static function arrayUnChunk(array $array)
+    {
+        return Functions ::callUserFuncArray([Arrays::class, 'arrayMerge'], $array);
+    }
+
+    public static function arrayPartition(array $array, int $noOfColumns): array
+    {
+        return static ::arrayChunk($array, intval(ceil(count($array) / $noOfColumns)));
+    }
+
+    public static function arrayBucket(array $array, int $bucketSize)
+    {
+        $buckets = static ::arrayChunk($array, $bucketSize);
+        $newArray = [];
+        foreach ($buckets as $k => $bucket) $newArray[$k] = array_sum($bucket) / count($bucket);
+        return $newArray;
+    }
+
+    public static function arrayChunkVertical(array $array, int $columns): array
+    {
+        $listLength = count($array);
+        $perColumn = floor($listLength / $columns);
+        $rest = $listLength % $columns;
+        $perColumns = [];
+        for ($i = 0; $i < $columns; $i++) {
+            $perColumns[$i] = $perColumn + ($i < $rest ? 1 : 0);
+        }
+        $tabular = [];
+        foreach ($perColumns as $rows) {
+            for ($i = 0; $i < $rows; $i++) {
+                $tabular[$i][] = static ::arrayShift($array);
+            }
+        }
+        return $tabular;
+    }
+
     public static function arrayColumn(array $input, $columnKey, $indexKey = null): array
     {
         return array_column($input, $columnKey, $indexKey);
@@ -87,5 +123,20 @@ class Arrays
     public static function arrayDiff(): array
     {
         return Functions ::callUserFuncArray('array_diff', func_get_args());
+    }
+
+    public static function arraySlice(array $array, int $offset, int $length = null, bool $preserveKeys = false)
+    {
+        return array_slice($array, $offset, $length, $preserveKeys);
+    }
+
+    public static function arrayShift(array &$array)
+    {
+        return array_shift($array);
+    }
+
+    public static function arrayMerge()
+    {
+        return Functions ::callUserFuncArray('array_merge', func_get_args());
     }
 }
