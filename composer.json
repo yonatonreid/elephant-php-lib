@@ -13,7 +13,8 @@
     "email": "yonatonreid@gmail.com"
   },
   "require": {
-    "phpunit/phpunit": "9.3.10"
+    "phpunit/phpunit": "9.3.10",
+    "ext-mbstring": "*"
   },
   "autoload": {
     "psr-4": {

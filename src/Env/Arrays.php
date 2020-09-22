@@ -36,11 +36,11 @@ class Arrays
         return $ret;
     }
 
-    public static function arrayChangeKeyRecursiveUnicode(array $array, int $case = CASE_LOWER): array
+    public static function arrayChangeKeyUnicodeRecursive(array $array, int $case = CASE_LOWER): array
     {
         return array_map(function ($item) use ($case) {
             if (is_array($item))
-                $item = static ::arrayChangeKeyRecursiveUnicode($item, $case);
+                $item = static ::arrayChangeKeyUnicodeRecursive($item, $case);
             return $item;
         }, static ::arrayChangeKeyCaseUnicode($array, $case));
     }
