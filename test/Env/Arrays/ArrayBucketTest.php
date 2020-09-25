@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace ElephantTest\Env\Arrays;
 
 
-use PHPUnit\Framework\TestCase;
+use ElephantTest\Env\AbstractTestCase;
+
 use Elephant\Env\Arrays;
 
-class ArrayBucketTest extends TestCase
+class ArrayBucketTest extends AbstractTestCase
 {
 }

@@ -63,7 +63,7 @@ class Arrays
     {
         $buckets = static ::arrayChunk($array, $bucketSize);
         $newArray = [];
-        foreach ($buckets as $k => $bucket) $newArray[$k] = array_sum($bucket) / count($bucket);
+        foreach ($buckets as $k => $bucket) $newArray[$k] = static ::arraySum($bucket) / count($bucket);
         return $newArray;
     }
 
@@ -138,5 +138,10 @@ class Arrays
     public static function arrayMerge()
     {
         return Functions ::callUserFuncArray('array_merge', func_get_args());
+    }
+
+    public static function arraySum(array $array)
+    {
+        return array_sum($array);
     }
 }
