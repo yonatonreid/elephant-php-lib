@@ -38,6 +38,34 @@ class ArrayColumnTest extends TestCase
         $this -> assertEquals($expected, Arrays ::arrayColumn($records, 'first_name'));
     }
 
+    public function testCanReturnColumnsWithKeyIndex()
+    {
+        $records = array(
+            array(
+                'id' => 2135,
+                'first_name' => 'John',
+                'last_name' => 'Doe',
+            ),
+            array(
+                'id' => 3245,
+                'first_name' => 'Sally',
+                'last_name' => 'Smith',
+            ),
+            array(
+                'id' => 5342,
+                'first_name' => 'Jane',
+                'last_name' => 'Jones',
+            ),
+            array(
+                'id' => 5623,
+                'first_name' => 'Peter',
+                'last_name' => 'Doe',
+            )
+        );
+        $expected = [2135 => 'Doe', 3245 => 'Smith', 5342 => 'Jones', 5623 => 'Doe'];
+        $this -> assertEquals($expected, Arrays ::arrayColumn($records, 'last_name','id'));
+    }
+
     public function testCanReturnObjectColumns()
     {
         $users = [
@@ -49,7 +77,8 @@ class ArrayColumnTest extends TestCase
         $this -> assertEquals($expected, Arrays ::arrayColumn($users, 'username'));
     }
 
-    public function testCanReturnColumnsWithAccessPrivateObjectMemberWithMagicMethods(){
+    public function testCanReturnColumnsWithAccessPrivateObjectMemberWithMagicMethods()
+    {
         $users = [
             new TestArrayColumnPerson('user 1'),
             new TestArrayColumnPerson('user 2'),
@@ -77,16 +106,16 @@ class TestArrayColumnPerson
 
     public function __construct(string $name)
     {
-        $this->name = $name;
+        $this -> name = $name;
     }
 
     public function __get($prop)
     {
-        return $this->$prop;
+        return $this -> $prop;
     }
 
-    public function __isset($prop) : bool
+    public function __isset($prop): bool
     {
-        return isset($this->$prop);
+        return isset($this -> $prop);
     }
 }
