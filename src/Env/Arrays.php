@@ -92,7 +92,7 @@ class Arrays
 
     public static function arrayCombine(array $keys, array $values, bool $keepAllValues = false): array
     {
-        if(Functions::count($keys)==0 && Functions::count($values)==0){
+        if (Functions ::count($keys) == 0 && Functions ::count($values) == 0) {
             return array();
         }
         if ($keepAllValues) {
@@ -108,16 +108,24 @@ class Arrays
             $result[$k][] = $values[$i];
         }
         static ::arrayWalk($result, function (&$v) {
-            if(Functions::isArray($v) && Functions::count($v)==1){
-                $v = static::arrayPop($v);
+            if (Functions ::isArray($v) && Functions ::count($v) == 1) {
+                $v = static ::arrayPop($v);
             }
         });
         return $result;
     }
 
-    public static function arrayCountValues(array $array): array
+    public static function arrayCountValues(array $array, string $column = null, $matchedKey = null)
     {
+        if ($column !== null) {
+            return static ::arrayCountValuesByColumn($array, $column, $matchedKey);
+        }
         return array_count_values($array);
+    }
+
+    private static function arrayCountValuesByColumn(array $array, string $column, $matchedKey): int
+    {
+        return static ::arrayCountValues(static ::arrayColumn($array, $column))[$matchedKey];
     }
 
     public static function arrayDiffAssoc(): array
