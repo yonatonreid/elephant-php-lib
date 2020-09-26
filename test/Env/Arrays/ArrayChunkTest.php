@@ -29,6 +29,6 @@ class ArrayChunkTest extends AbstractTestCase
     {
         $this -> expectException(ArgumentCountError::class);
         $actual = array('a', 'b', 'c', 'd', 'e');
-        Arrays ::arrayChunk($actual,1);
+        Arrays ::arrayChunk($actual);
     }
 }
