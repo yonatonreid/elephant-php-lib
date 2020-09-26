@@ -10,6 +10,12 @@ use ElephantTest\Env\AbstractTestCase;
 
 class ArrayColumnTest extends AbstractTestCase
 {
+    public function testOneDimensionalArray()
+    {
+        $records = ['a', 'b', 'c', 'd'];
+        $this -> assertEquals(array(), Arrays ::arrayColumn($records, 'someColumn'));
+    }
+
     public function testCanReturnColumns()
     {
         $records = array(
@@ -63,7 +69,7 @@ class ArrayColumnTest extends AbstractTestCase
             )
         );
         $expected = [2135 => 'Doe', 3245 => 'Smith', 5342 => 'Jones', 5623 => 'Doe'];
-        $this -> assertEquals($expected, Arrays ::arrayColumn($records, 'last_name','id'));
+        $this -> assertEquals($expected, Arrays ::arrayColumn($records, 'last_name', 'id'));
     }
 
     public function testCanReturnObjectColumns()

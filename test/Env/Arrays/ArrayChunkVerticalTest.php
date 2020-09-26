@@ -11,6 +11,13 @@ use ElephantTest\Env\AbstractTestCase;
 
 class ArrayChunkVerticalTest extends AbstractTestCase
 {
+    public function testCreatesFiveArraysFromFiveElementsWithOneSize()
+    {
+        $actual = range(1, 5);
+        $expected = [[1], [2], [3], [4], [5]];
+        $this -> assertEquals($expected, Arrays ::arrayChunkVertical($actual, 1));
+    }
+
     public function testCanChunkVertically()
     {
         $actual = range(1, 31);

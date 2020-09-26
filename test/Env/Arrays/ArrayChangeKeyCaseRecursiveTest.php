@@ -10,6 +10,12 @@ use TypeError;
 
 class ArrayChangeKeyCaseRecursiveTest extends AbstractTestCase
 {
+    public function testArrayIsEmpty()
+    {
+        $expected = array();
+        $this -> assertEquals($expected, Arrays ::arrayChangeKeyCaseRecursive(array()));
+    }
+
     public function testArrayChangeKeyCaseRecursiveReturnsLower()
     {
         $actual = ['FOO' => ['I' => 1, 'Z' => 2, 'A' => ['B' => 3, 'C' => 4]], 'BAR' => 2, 'BAZ' => 3];

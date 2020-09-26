@@ -10,6 +10,12 @@ use TypeError;
 
 class ArrayChangeKeyCaseUnicodeTest extends AbstractTestCase
 {
+    public function testArrayIsEmpty()
+    {
+        $expected = array();
+        $this -> assertEquals($expected, Arrays ::arrayChangeKeyCaseUnicode(array()));
+    }
+
     public function testArrayChangeKeyCaseUnicodeThrowsExceptionWhenNotArray()
     {
         $this -> expectException(TypeError::class);

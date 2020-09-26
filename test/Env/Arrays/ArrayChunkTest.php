@@ -7,10 +7,15 @@ namespace ElephantTest\Env\Arrays;
 use ArgumentCountError;
 use Elephant\Env\Arrays;
 use ElephantTest\Env\AbstractTestCase;
-
+use \ErrorException;
 
 class ArrayChunkTest extends AbstractTestCase
 {
+    public function testSizeMustBeGreaterThanZero(){
+        $this->expectException(ErrorException::class);
+        $this->assertEquals(array(),Arrays::arrayChunk(array(),0));
+    }
+
     public function testCanChunkArrayWithoutPreservingKeys()
     {
         $actual = array('a', 'b', 'c', 'd', 'e');

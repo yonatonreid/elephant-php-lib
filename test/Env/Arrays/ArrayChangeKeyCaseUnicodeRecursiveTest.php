@@ -10,6 +10,11 @@ use TypeError;
 
 class ArrayChangeKeyCaseUnicodeRecursiveTest extends AbstractTestCase
 {
+    public function testArrayIsEmpty()
+    {
+        $expected = array();
+        $this -> assertEquals($expected, Arrays ::arrayChangeKeyUnicodeRecursive(array()));
+    }
 
     public function testArrayChangeKeyCaseUnicodeRecursiveThrowsExceptionWhenNotArray()
     {

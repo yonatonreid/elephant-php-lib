@@ -10,6 +10,12 @@ use TypeError;
 
 class ArrayChangeKeyCaseTest extends AbstractTestCase
 {
+    public function testArrayIsEmpty()
+    {
+        $expected = array();
+        $this -> assertEquals($expected, Arrays ::arrayChangeKeyCase(array()));
+    }
+
     public function testArrayChangeKeyCaseDefaultsLower()
     {
         $actual = ['FOO' => 1, 'bar' => 2, 'BaZ' => 3];
