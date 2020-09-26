@@ -6,9 +6,9 @@ namespace ElephantTest\Env\Arrays;
 
 
 use Elephant\Env\Arrays;
-use PHPUnit\Framework\TestCase;
+use ElephantTest\Env\AbstractTestCase;
 
-class ArrayUnChunkTest extends TestCase
+class ArrayUnChunkTest extends AbstractTestCase
 {
     public function testCanUnchunk()
     {

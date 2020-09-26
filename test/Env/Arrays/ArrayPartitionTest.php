@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace ElephantTest\Env\Arrays;
 
 use Elephant\Env\Arrays;
-use PHPUnit\Framework\TestCase;
+use ElephantTest\Env\AbstractTestCase;
 
-class ArrayPartitionTest extends TestCase
+class ArrayPartitionTest extends AbstractTestCase
 {
     public function testCanPartitionArray()
     {

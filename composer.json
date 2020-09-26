@@ -18,7 +18,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Elephant\\": "src"
+      "Elephant\\": "src",
+      "ElephantTest\\": "test"
     }
   }
 }

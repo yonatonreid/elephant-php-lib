@@ -7,9 +7,9 @@ namespace ElephantTest\Env\Arrays;
 
 
 use Elephant\Env\Arrays;
-use PHPUnit\Framework\TestCase;
+use ElephantTest\Env\AbstractTestCase;
 
-class ArrayChunkVerticalTest extends TestCase
+class ArrayChunkVerticalTest extends AbstractTestCase
 {
     public function testCanChunkVertically()
     {

@@ -90,9 +90,29 @@ class Arrays
         return array_column($input, $columnKey, $indexKey);
     }
 
-    public static function arrayCombine(array $keys, array $values): array
+    public static function arrayCombine(array $keys, array $values, bool $keepAllValues = false): array
     {
+        if(Functions::count($keys)==0 && Functions::count($values)==0){
+            return array();
+        }
+        if ($keepAllValues) {
+            return static ::arrayCombineWithValues($keys, $values);
+        }
         return array_combine($keys, $values);
+    }
+
+    private static function arrayCombineWithValues(array $keys, array $values): array
+    {
+        $result = array();
+        foreach ($keys as $i => $k) {
+            $result[$k][] = $values[$i];
+        }
+        static ::arrayWalk($result, function (&$v) {
+            if(Functions::isArray($v) && Functions::count($v)==1){
+                $v = static::arrayPop($v);
+            }
+        });
+        return $result;
     }
 
     public static function arrayCountValues(array $array): array
@@ -143,5 +163,15 @@ class Arrays
     public static function arraySum(array $array)
     {
         return array_sum($array);
+    }
+
+    public static function arrayWalk(array &$array, callable $callback, $userdata = null)
+    {
+        array_walk($array, $callback, $userdata);
+    }
+
+    public static function arrayPop(array &$array)
+    {
+        return array_pop($array);
     }
 }

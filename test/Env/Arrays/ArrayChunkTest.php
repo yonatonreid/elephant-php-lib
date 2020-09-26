@@ -6,10 +6,10 @@ namespace ElephantTest\Env\Arrays;
 
 use ArgumentCountError;
 use Elephant\Env\Arrays;
-use PHPUnit\Framework\TestCase;
+use ElephantTest\Env\AbstractTestCase;
 
 
-class ArrayChunkTest extends TestCase
+class ArrayChunkTest extends AbstractTestCase
 {
     public function testCanChunkArrayWithoutPreservingKeys()
     {
@@ -29,6 +29,6 @@ class ArrayChunkTest extends TestCase
     {
         $this -> expectException(ArgumentCountError::class);
         $actual = array('a', 'b', 'c', 'd', 'e');
-        Arrays ::arrayChunk($actual);
+        Arrays ::arrayChunk($actual,1);
     }
 }

@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace ElephantTest\Env\Arrays;
 
 use Elephant\Env\Arrays;
-use PHPUnit\Framework\TestCase;
+use ElephantTest\Env\AbstractTestCase;
 use TypeError;
 
-class ArrayChangeKeyCaseUnicodeTest extends TestCase
+class ArrayChangeKeyCaseUnicodeTest extends AbstractTestCase
 {
     public function testArrayChangeKeyCaseUnicodeThrowsExceptionWhenNotArray()
     {
