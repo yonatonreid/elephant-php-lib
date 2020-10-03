@@ -144,8 +144,8 @@ class Arrays
         $diff = array();
         foreach (static ::arrayShift($args) as $key => $val) {
             for ($i = 0, $j = 0, $tmp = array($val), $count = count($args); $i < $count; $i++) {
-                if (is_array($val)) {
-                    if (!isset ($args[$i][$key]) || !is_array($args[$i][$key]) || empty($args[$i][$key])) {
+                if (Functions ::isArray($val)) {
+                    if (!isset ($args[$i][$key]) || !Functions ::isArray($args[$i][$key]) || empty($args[$i][$key])) {
                         $j++;
                     } else {
                         $tmp[] = $args[$i][$key];
@@ -155,10 +155,14 @@ class Arrays
                 }
             }
             if (is_array($val)) {
-                $tmp = call_user_func_array([Arrays::class, 'arrayDiffAssocRecursive'], ...$tmp);
+                $tmp = Functions ::callUserFuncArray([Arrays::class, 'arrayDiffAssocRecursive'], $tmp);
                 if (!empty ($tmp)) $diff[$key] = $tmp;
-                elseif ($j == $count) $diff[$key] = $val;
-            } elseif ($j == $count && $count) $diff[$key] = $val;
+                elseif ($j == $count) {
+                    $diff[$key] = $val;
+                }
+            } elseif ($j == $count && $count) {
+                $diff[$key] = $val;
+            }
         }
         return $diff;
     }
