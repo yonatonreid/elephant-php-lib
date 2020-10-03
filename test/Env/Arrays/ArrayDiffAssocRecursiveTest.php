@@ -27,8 +27,8 @@ class ArrayDiffAssocRecursiveTest extends AbstractTestCase
 
     public function testDuplicates()
     {
-        $array1 = array(0 => "a", 1 => "b", 2 => "c", 3 => "a", 4 => "a");
-        $array2 = array(0 => "a");
+        $array1 = array("a", "b", "c", "a", "a");
+        $array2 = array("a");
         $expected = array(1 => "b", 2 => "c", 3 => "a", 4 => "a");
         $this -> assertEquals($expected, Arrays ::arrayDiffAssocRecursive($array1, $array2));
     }
