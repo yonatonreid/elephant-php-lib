@@ -172,6 +172,44 @@ class Arrays
         return Functions ::callUserFuncArray('array_diff_key', func_get_args());
     }
 
+    public static function arrayDiffKeyUnique(array $array1, array $array2): array
+    {
+        return static ::arrayMerge(static ::arrayDiffKey($array1, $array2), static ::arrayDiffKey($array2, $array1));
+    }
+
+    public static function arrayDiffKeyRecursive(array $arr1, array $arr2): array
+    {
+        $diff = static::arrayDiffKey($arr1, $arr2);
+        $intersect = array_intersect_key($arr1, $arr2);
+        foreach ($intersect as $k => $v) {
+            if (Functions ::isArray($arr1[$k]) && Functions ::isArray($arr2[$k])) {
+                $d = static ::arrayDiffKeyRecursive($arr1[$k], $arr2[$k]);
+                if ($d) {
+                    $diff[$k] = $d;
+                }
+            }
+        }
+        return $diff;
+    }
+
+    public static function arraySameKeys(array $array1,array $array2):bool{
+        return static::hasSameKeys($array1,$array2) && static::hasSameKeys($array2,$array1);
+    }
+
+    private static function hasSameKeys(array $a1,array $a2):bool{
+        $same = false;
+        if (!array_diff_key($a1, $a2)) {
+            $same = true;
+            foreach ($a1 as $k => $v) {
+                if (is_array($v) && !static::hasSameKeys($v, $a2[$k])) {
+                    $same = false;
+                    break;
+                }
+            }
+        }
+        return $same;
+    }
+
     public static function arrayDiffUassoc(): array
     {
         return Functions ::callUserFuncArray('array_diff_uassoc', func_get_args());
@@ -187,6 +225,13 @@ class Arrays
         return Functions ::callUserFuncArray('array_diff', func_get_args());
     }
 
+    public static function arrayIdenticalValues(array $array1, array $array2): bool
+    {
+        sort($array1);
+        sort($array2);
+        return $array1 === $array2;
+    }
+
     public static function arraySlice(array $array, int $offset, int $length = null, bool $preserveKeys = false)
     {
         return array_slice($array, $offset, $length, $preserveKeys);
@@ -197,7 +242,7 @@ class Arrays
         return array_shift($array);
     }
 
-    public static function arrayMerge()
+    public static function arrayMerge(array $array1, array $array2, ...$arrays)
     {
         return Functions ::callUserFuncArray('array_merge', func_get_args());
     }
