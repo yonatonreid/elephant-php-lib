@@ -128,12 +128,42 @@ class Arrays
         return static ::arrayCountValues(static ::arrayColumn($array, $column))[$matchedKey];
     }
 
-    public static function arrayDiffAssoc(): array
+    public static function arrayDelete($value, array $array): array
+    {
+        return static ::arrayDiff($array, array($value));
+    }
+
+    public static function arrayDiffAssoc(array $array1, array $array2, ...$arrays): array
     {
         return Functions ::callUserFuncArray('array_diff_assoc', func_get_args());
     }
 
-    public static function arrayDiffKey(): array
+    public static function arrayDiffAssocRecursive(): array
+    {
+        $args = func_get_args();
+        $diff = array();
+        foreach (static ::arrayShift($args) as $key => $val) {
+            for ($i = 0, $j = 0, $tmp = array($val), $count = count($args); $i < $count; $i++) {
+                if (is_array($val)) {
+                    if (!isset ($args[$i][$key]) || !is_array($args[$i][$key]) || empty($args[$i][$key])) {
+                        $j++;
+                    } else {
+                        $tmp[] = $args[$i][$key];
+                    }
+                } elseif (!array_key_exists($key, $args[$i]) || (string)$args[$i][$key] !== (string)$val) {
+                    $j++;
+                }
+            }
+            if (is_array($val)) {
+                $tmp = call_user_func_array([Arrays::class, 'arrayDiffAssocRecursive'], ...$tmp);
+                if (!empty ($tmp)) $diff[$key] = $tmp;
+                elseif ($j == $count) $diff[$key] = $val;
+            } elseif ($j == $count && $count) $diff[$key] = $val;
+        }
+        return $diff;
+    }
+
+    public static function arrayDiffKey(array $array1, array $array2, ...$arrays): array
     {
         return Functions ::callUserFuncArray('array_diff_key', func_get_args());
     }
@@ -148,7 +178,7 @@ class Arrays
         return Functions ::callUserFuncArray('array_diff_ukey', func_get_args());
     }
 
-    public static function arrayDiff(): array
+    public static function arrayDiff(array $array1, array $array2, ...$arrays): array
     {
         return Functions ::callUserFuncArray('array_diff', func_get_args());
     }
