@@ -133,6 +133,22 @@ class Arrays
         return static ::arrayDiff($array, array($value));
     }
 
+    public static function arrayDeleteRecursive($array, $value)
+    {
+        $h = array();
+        foreach ($array as $k => $v) {
+            if (Functions ::isArray($v)) {
+                $i = static ::arrayDelete($value, $v);
+                if (!empty($i)) {
+                    $h[$k] = $i;
+                }
+            } elseif ($value != $v) {
+                $h[$k] = $v;
+            }
+        }
+        return $h;
+    }
+
     public static function arrayDiffAssoc(array $array1, array $array2, ...$arrays): array
     {
         return Functions ::callUserFuncArray('array_diff_assoc', func_get_args());
@@ -179,7 +195,7 @@ class Arrays
 
     public static function arrayDiffKeyRecursive(array $arr1, array $arr2): array
     {
-        $diff = static::arrayDiffKey($arr1, $arr2);
+        $diff = static ::arrayDiffKey($arr1, $arr2);
         $intersect = array_intersect_key($arr1, $arr2);
         foreach ($intersect as $k => $v) {
             if (Functions ::isArray($arr1[$k]) && Functions ::isArray($arr2[$k])) {
@@ -192,16 +208,18 @@ class Arrays
         return $diff;
     }
 
-    public static function arraySameKeys(array $array1,array $array2):bool{
-        return static::hasSameKeys($array1,$array2) && static::hasSameKeys($array2,$array1);
+    public static function arraySameKeys(array $array1, array $array2): bool
+    {
+        return static ::hasSameKeys($array1, $array2) && static ::hasSameKeys($array2, $array1);
     }
 
-    private static function hasSameKeys(array $a1,array $a2):bool{
+    private static function hasSameKeys(array $a1, array $a2): bool
+    {
         $same = false;
         if (!array_diff_key($a1, $a2)) {
             $same = true;
             foreach ($a1 as $k => $v) {
-                if (is_array($v) && !static::hasSameKeys($v, $a2[$k])) {
+                if (is_array($v) && !static ::hasSameKeys($v, $a2[$k])) {
                     $same = false;
                     break;
                 }
@@ -218,6 +236,23 @@ class Arrays
     public static function arrayDiffUkey(): array
     {
         return Functions ::callUserFuncArray('array_diff_ukey', func_get_args());
+    }
+
+    public static function arraySliceAssoc($array, $keys)
+    {
+        return array_intersect_key($array, array_flip($keys));
+    }
+
+    public static function arraySliceAssocInverse($array, $keys)
+    {
+        return array_diff_key($array, array_flip($keys));
+    }
+
+    public static function arrayChop(&$array, $num): array
+    {
+        $ret = static ::arraySlice($array, 0, $num);
+        $array = static ::arraySlice($array, $num);
+        return $ret;
     }
 
     public static function arrayDiff(array $array1, array $array2, ...$arrays): array
