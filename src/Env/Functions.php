@@ -13,11 +13,18 @@ class Functions
         return call_user_func_array($callback, $paramArr);
     }
 
-    public static function isArray($value):bool{
+    public static function isArray($value): bool
+    {
         return is_array($value);
     }
 
-    public static function count(array $array):int{
+    public static function count(array $array): int
+    {
         return count($array);
+    }
+
+    public static function empty($val)
+    {
+        return empty($val);
     }
 }

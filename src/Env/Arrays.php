@@ -139,7 +139,7 @@ class Arrays
         foreach ($array as $k => $v) {
             if (Functions ::isArray($v)) {
                 $i = static ::arrayDelete($value, $v);
-                if (!empty($i)) {
+                if (!Functions ::empty($i)) {
                     $h[$k] = $i;
                 }
             } elseif ($value != $v) {
@@ -161,7 +161,7 @@ class Arrays
         foreach (static ::arrayShift($args) as $key => $val) {
             for ($i = 0, $j = 0, $tmp = array($val), $count = count($args); $i < $count; $i++) {
                 if (Functions ::isArray($val)) {
-                    if (!isset ($args[$i][$key]) || !Functions ::isArray($args[$i][$key]) || empty($args[$i][$key])) {
+                    if (!isset ($args[$i][$key]) || !Functions ::isArray($args[$i][$key]) || Functions ::empty($args[$i][$key])) {
                         $j++;
                     } else {
                         $tmp[] = $args[$i][$key];
@@ -172,8 +172,9 @@ class Arrays
             }
             if (is_array($val)) {
                 $tmp = Functions ::callUserFuncArray([Arrays::class, 'arrayDiffAssocRecursive'], $tmp);
-                if (!empty ($tmp)) $diff[$key] = $tmp;
-                elseif ($j == $count) {
+                if (!Functions ::empty($tmp)) {
+                    $diff[$key] = $tmp;
+                } elseif ($j == $count) {
                     $diff[$key] = $val;
                 }
             } elseif ($j == $count && $count) {
