@@ -209,6 +209,20 @@ class Arrays
         return $diff;
     }
 
+    public static function arrayReorder(&$array, $list, $keepRemaining = true, $prepend = false, $preserveKeys = true)
+    {
+        $t = array();
+        foreach ($list as $i) {
+            if (isset($array[$i])) {
+                $tempVal = static ::arraySlice($array, array_search($i, array_keys($array)), 1, $preserveKeys);
+                $t[$i] = static ::arrayShift($tempVal);
+                unset($array[$i]);
+            }
+        }
+        $array = $keepRemaining ? ($prepend ? $array + $t : $t + $array) : $t;
+        return $array;
+    }
+
     public static function arraySameKeys(array $array1, array $array2): bool
     {
         return static ::hasSameKeys($array1, $array2) && static ::hasSameKeys($array2, $array1);
@@ -296,5 +310,33 @@ class Arrays
     public static function arrayPop(array &$array)
     {
         return array_pop($array);
+    }
+
+    public static function arrayUnpop(array &$array){
+        $args=func_get_args();
+        unset($args[0]);
+        $t=array();
+        foreach($args as $arg){
+            $t[]=$arg;
+        }
+        return static::arrayMerge($array,$t);
+    }
+
+    public static function arrayPick(array &$array,$keys){
+        if (is_scalar($keys)) {
+            $keys = array ($keys);
+        }
+        $resultArray = array ();
+        foreach ($keys as $key) {
+            if (is_scalar($key)) {
+                if (array_key_exists($key, $array)) {
+                    $resultArray[$key] = $array[$key];
+                    unset($array[$key]);
+                }
+            } else {
+                return false;
+            }
+        }
+        return $resultArray;
     }
 }

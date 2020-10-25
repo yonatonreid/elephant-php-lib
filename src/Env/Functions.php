@@ -27,4 +27,5 @@ class Functions
     {
         return empty($val);
     }
+
 }
