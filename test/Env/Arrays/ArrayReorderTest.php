@@ -47,7 +47,7 @@ class ArrayReorderTest extends AbstractTestCase
             'e' => 'e'
         );
         $order = array('c', 'b', 'a');
-        $expected = ['d' => 'd', 'e' => 'e','c' => 'c', 'b' => 'b', 'a' => 'a'];
-        $this->assertEquals($expected,Arrays ::arrayReorder($a, $order,true,true));
+        $expected = ['d' => 'd', 'e' => 'e', 'c' => 'c', 'b' => 'b', 'a' => 'a'];
+        $this -> assertEquals($expected, Arrays ::arrayReorder($a, $order, true, true));
     }
 }

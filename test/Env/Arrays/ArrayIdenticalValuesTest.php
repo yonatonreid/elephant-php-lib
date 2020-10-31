@@ -17,16 +17,18 @@ class ArrayIdenticalValuesTest extends AbstractTestCase
         $this -> assertEquals($expected, Arrays ::arrayIdenticalValues($a, $b));
     }
 
-    public function testIsNotIdentical(){
-        $array1 = array( "red" , "green" , "blue" );
-        $array2 = array( "red" , "green" , "blue" , "yellow" );
+    public function testIsNotIdentical()
+    {
+        $array1 = array("red", "green", "blue");
+        $array2 = array("red", "green", "blue", "yellow");
         $expected = false;
         $this -> assertEquals($expected, Arrays ::arrayIdenticalValues($array1, $array2));
     }
 
-    public function testKeysNotSameStillIdentical(){
-        $a = array( "red" , "green" , "blue" );
-        $b = array( "x" => "red" , "y" =>  "green" , "z" => "blue" );
+    public function testKeysNotSameStillIdentical()
+    {
+        $a = array("red", "green", "blue");
+        $b = array("x" => "red", "y" => "green", "z" => "blue");
         $expected = true;
         $this -> assertEquals($expected, Arrays ::arrayIdenticalValues($a, $b));
     }

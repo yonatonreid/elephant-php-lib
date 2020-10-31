@@ -167,7 +167,7 @@ class Arrays
                     } else {
                         $tmp[] = $args[$i][$key];
                     }
-                } elseif (!array_key_exists($key, $args[$i]) || (string)$args[$i][$key] !== (string)$val) {
+                } elseif (!static ::arrayKeyExists($key, $args[$i]) || (string)$args[$i][$key] !== (string)$val) {
                     $j++;
                 }
             }
@@ -313,24 +313,31 @@ class Arrays
         return array_pop($array);
     }
 
-    public static function arrayUnpop(array &$array){
-        $args=func_get_args();
-        unset($args[0]);
-        $t=array();
-        foreach($args as $arg){
-            $t[]=$arg;
-        }
-        return static::arrayMerge($array,$t);
+    public static function arrayKeyExists($key, array $arr)
+    {
+        return array_key_exists($key, $arr);
     }
 
-    public static function arrayPick(array &$array,$keys){
-        if (is_scalar($keys)) {
-            $keys = array ($keys);
+    public static function arrayUnpop(array &$array)
+    {
+        $args = func_get_args();
+        unset($args[0]);
+        $t = array();
+        foreach ($args as $arg) {
+            $t[] = $arg;
         }
-        $resultArray = array ();
+        return static ::arrayMerge($array, $t);
+    }
+
+    public static function arrayPick(array &$array, $keys)
+    {
+        if (is_scalar($keys)) {
+            $keys = array($keys);
+        }
+        $resultArray = array();
         foreach ($keys as $key) {
             if (is_scalar($key)) {
-                if (array_key_exists($key, $array)) {
+                if (static ::arrayKeyExists($key, $array)) {
                     $resultArray[$key] = $array[$key];
                     unset($array[$key]);
                 }
@@ -341,12 +348,13 @@ class Arrays
         return $resultArray;
     }
 
-    public static function arrayZip(&$data,$glue){
-        if(!Functions::isArray($data)){
+    public static function arrayZip(&$data, $glue)
+    {
+        if (!Functions ::isArray($data)) {
             throw new InvalidArgumentException("First parameter must be an array");
         }
-        static::arrayWalk($data,function(&$value,$key,$joinUsing){
+        static ::arrayWalk($data, function (&$value, $key, $joinUsing) {
             $value = $key . $joinUsing . $value;
-        },$glue);
+        }, $glue);
     }
 }

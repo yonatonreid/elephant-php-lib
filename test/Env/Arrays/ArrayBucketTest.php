@@ -7,11 +7,10 @@ namespace ElephantTest\Env\Arrays;
 
 use ElephantTest\Env\AbstractTestCase;
 
-use Elephant\Env\Arrays;
-
 class ArrayBucketTest extends AbstractTestCase
 {
-    public function testNoTest(){
-        $this->assertTrue(true);
+    public function testNoTest()
+    {
+        $this -> assertTrue(true);
     }
 }

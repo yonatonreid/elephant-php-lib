@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace ElephantTest\Env\Arrays;
 
 
-use ElephantTest\Env\AbstractTestCase;
 use Elephant\Env\Arrays;
+use ElephantTest\Env\AbstractTestCase;
 
 class ArrayPopTest extends AbstractTestCase
 {
