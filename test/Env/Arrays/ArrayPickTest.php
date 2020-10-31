@@ -15,4 +15,11 @@ class ArrayPickTest extends AbstractTestCase
         $keys = ['foo', 'bat'];
         $this -> assertEquals(['foo' => 1, 'bat' => 4], Arrays ::arrayPick($res, $keys));
     }
+
+    public function testCanPickScalar()
+    {
+        $res = ['foo' => 1, 'baz' => 2, 'bar' => 3, 'bat' => 4];
+        $keys = 'foo';
+        $this -> assertEquals(['foo' => 1], Arrays ::arrayPick($res, $keys));
+    }
 }

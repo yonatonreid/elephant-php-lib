@@ -313,9 +313,14 @@ class Arrays
         return array_pop($array);
     }
 
-    public static function arrayKeyExists($key, array $arr)
+    public static function arrayKeyExists($key, $arr)
     {
         return array_key_exists($key, $arr);
+    }
+
+    public static function arrayCheck($key, $arr)
+    {
+        return isset($arr[$key]) || static ::arrayKeyExists($key, $arr);
     }
 
     public static function arrayUnpop(array &$array)
@@ -331,12 +336,12 @@ class Arrays
 
     public static function arrayPick(array &$array, $keys)
     {
-        if (is_scalar($keys)) {
+        if (Functions ::isScalar($keys)) {
             $keys = array($keys);
         }
         $resultArray = array();
         foreach ($keys as $key) {
-            if (is_scalar($key)) {
+            if (Functions ::isScalar($key)) {
                 if (static ::arrayKeyExists($key, $array)) {
                     $resultArray[$key] = $array[$key];
                     unset($array[$key]);

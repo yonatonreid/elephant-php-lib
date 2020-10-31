@@ -28,4 +28,7 @@ class Functions
         return empty($val);
     }
 
+    public static function isScalar($val){
+        return is_scalar($val);
+    }
 }
