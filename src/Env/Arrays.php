@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Elephant\Env;
 
+use http\Exception\InvalidArgumentException;
 use function array_change_key_case;
 use function array_chunk;
 use function array_column;
@@ -338,5 +339,14 @@ class Arrays
             }
         }
         return $resultArray;
+    }
+
+    public static function arrayZip(&$data,$glue){
+        if(!Functions::isArray($data)){
+            throw new InvalidArgumentException("First parameter must be an array");
+        }
+        static::arrayWalk($data,function(&$value,$key,$joinUsing){
+            $value = $key . $joinUsing . $value;
+        },$glue);
     }
 }

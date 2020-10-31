@@ -14,4 +14,10 @@ class ArrayUnpopTest extends AbstractTestCase
         $arr = Arrays ::arrayUnpop($arr, "apple", "raspberry");
         $this -> assertEquals(['orange', 'banana', 'apple', 'raspberry'], $arr);
     }
+
+    public function testCanUnpopArray(){
+        $arr = array('orange', 'banana');
+        $arr = Arrays ::arrayUnpop($arr, ["apple"], ["raspberry"]);
+        $this -> assertEquals(['orange', 'banana', ['apple'], ['raspberry']], $arr);
+    }
 }
