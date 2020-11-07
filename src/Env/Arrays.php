@@ -10,6 +10,9 @@ use function array_chunk;
 use function array_column;
 use function array_combine;
 use function array_count_values;
+use function array_map;
+use function is_array;
+
 
 class Arrays
 {
@@ -21,7 +24,7 @@ class Arrays
     public static function arrayChangeKeyCaseRecursive(array $array, int $case = CASE_LOWER): array
     {
         return array_map(function ($item) use ($case) {
-            if (is_array($item))
+            if (Functions ::isArray($item))
                 $item = static ::arrayChangeKeyCaseRecursive($item, $case);
             return $item;
         }, static ::arrayChangeKeyCase($array, $case));
@@ -39,7 +42,7 @@ class Arrays
     public static function arrayChangeKeyUnicodeRecursive(array $array, int $case = MB_CASE_LOWER): array
     {
         return array_map(function ($item) use ($case) {
-            if (is_array($item))
+            if (Functions ::isArray($item))
                 $item = static ::arrayChangeKeyUnicodeRecursive($item, $case);
             return $item;
         }, static ::arrayChangeKeyCaseUnicode($array, $case));
@@ -242,6 +245,27 @@ class Arrays
             }
         }
         return $same;
+    }
+
+    public static function arrayFillKeys(array $keys, $value, bool $intersect = false): array
+    {
+        if ($intersect) {
+            $filledArray = array();
+            if (Functions ::isArray($keys) && Functions ::isArray($value)) {
+                foreach ($keys as $key => $v) {
+                    $filledArray[$v] = $value[$key];
+                }
+            } else {
+                throw new InvalidArgumentException("Both keys and value must be arrays for intersection");
+            }
+            return $filledArray;
+        }
+        return array_fill_keys($keys, $value);
+    }
+
+    public static function arrayNukeKeys(array $keys, array $arr)
+    {
+        return static ::arrayDiffKey($arr, static ::arrayFillKeys($keys, 0));
     }
 
     public static function arrayDiffUassoc(): array
