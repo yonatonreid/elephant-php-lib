@@ -10,9 +10,12 @@ use function array_chunk;
 use function array_column;
 use function array_combine;
 use function array_count_values;
-use function array_map;
+use function array_fill_keys;
+use function array_key_exists;
+use function array_pop;
+use function array_slice;
+use function array_walk;
 use function is_array;
-
 
 class Arrays
 {
@@ -23,7 +26,7 @@ class Arrays
 
     public static function arrayChangeKeyCaseRecursive(array $array, int $case = CASE_LOWER): array
     {
-        return array_map(function ($item) use ($case) {
+        return static ::arrayMap(function ($item) use ($case) {
             if (Functions ::isArray($item))
                 $item = static ::arrayChangeKeyCaseRecursive($item, $case);
             return $item;
@@ -41,7 +44,7 @@ class Arrays
 
     public static function arrayChangeKeyUnicodeRecursive(array $array, int $case = MB_CASE_LOWER): array
     {
-        return array_map(function ($item) use ($case) {
+        return static ::arrayMap(function ($item) use ($case) {
             if (Functions ::isArray($item))
                 $item = static ::arrayChangeKeyUnicodeRecursive($item, $case);
             return $item;
@@ -320,6 +323,11 @@ class Arrays
     public static function arrayMerge(array $array1, array $array2, ...$arrays)
     {
         return Functions ::callUserFuncArray('array_merge', func_get_args());
+    }
+
+    public static function arrayMap(callable $callback, array $array, array ...$arrays): array
+    {
+        return Functions ::callUserFuncArray('array_map', func_get_args());
     }
 
     public static function arraySum(array $array)

@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace ElephantTest\Env\Arrays;
 
 use Elephant\Env\Arrays;
+use ElephantTest\Env\AbstractTestCase;
 
 
-class ArrayNukeKeys extends \ElephantTest\Env\AbstractTestCase
+class ArrayNukeKeys extends AbstractTestCase
 {
     public function testCanNukeKeys()
     {

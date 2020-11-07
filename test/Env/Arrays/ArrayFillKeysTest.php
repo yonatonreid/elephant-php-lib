@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace ElephantTest\Env\Arrays;
 
 use Elephant\Env\Arrays;
+use ElephantTest\Env\AbstractTestCase;
 use http\Exception\InvalidArgumentException;
 
-class ArrayFillKeysTest extends \ElephantTest\Env\AbstractTestCase
+class ArrayFillKeysTest extends AbstractTestCase
 {
     public function testCanFillKeys()
     {
