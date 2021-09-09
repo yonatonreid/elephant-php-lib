@@ -266,6 +266,50 @@ class Arrays
         return array_fill_keys($keys, $value);
     }
 
+    public static function arrayFill(int $startIndex, int $num, $value, bool $fixNegativeIndices = false): array
+    {
+        if ($startIndex < 0 && $fixNegativeIndices) {
+            $num = $startIndex + $num;
+            return static ::arrayFillKeys(static ::range($startIndex, $num), $value);
+        }
+        return array_fill($startIndex, $num, $value);
+    }
+
+    public static function arrayFlip(array $array,bool $preserveOrder=false):array{
+        if(!$preserveOrder) {
+            return array_flip($array);
+        }
+        $array = static::arrayReverse($array,true);
+        $array = static::arrayFlip(static::arrayUnique($array));
+        return static::arrayReverse($array,true);
+    }
+
+    public static function arrayUnique(array $array,int $flags=SORT_STRING){
+        return array_unique($array,$flags);
+    }
+
+    public static function arrayReverse(array $array,bool $preserveKeys=false){
+        return array_reverse($array,$preserveKeys);
+    }
+
+    public static function arrayKeys(array $array, $searchValue = null, bool $strict = false): array
+    {
+        if (is_null($searchValue)) {
+            return array_keys($array);
+        }
+        return array_keys($array, $searchValue, $strict);
+    }
+
+    public static function arrayFillMissingKeys(int $startIndex = 0, array $array, $default = null, $atleast = 0): array
+    {
+        return $array + static ::arrayFill($startIndex, max($atleast, max(static ::arrayKeys($array))), $default);
+    }
+
+    public static function range($start, $end, $step = 1): array
+    {
+        return range($start, $end, $step);
+    }
+
     public static function arrayNukeKeys(array $keys, array $arr)
     {
         return static ::arrayDiffKey($arr, static ::arrayFillKeys($keys, 0));
@@ -335,6 +379,39 @@ class Arrays
         return array_sum($array);
     }
 
+    public static function arrayFilter(array $array, callable $callback, int $flag = 0)
+    {
+        return array_filter($array, $callback, $flag);
+    }
+
+    public static function arrayValues(array $array):array{
+        return array_values($array);
+    }
+
+    public static function arrayValuesRecursive(array $arr){
+
+    }
+
+    public static function arrayValueCountRecursive($match,$array){
+        $count=0;
+        if(Functions::isArray($array)){
+            foreach($array as $k=>$n){
+                if(is_array($n)){
+                    $count+=static::arrayValueCountRecursive($match,$n);
+                } else {
+                    if($n==$match){
+                        $count++;
+                    }
+                }
+            }
+        } else {
+            if($array==$match){
+                $count++;
+            }
+        }
+        return $count;
+    }
+
     public static function arrayWalk(array &$array, callable $callback, $userdata = null)
     {
         array_walk($array, $callback, $userdata);
@@ -345,10 +422,7 @@ class Arrays
         return array_pop($array);
     }
 
-    public static function arrayKeyExists($key, $arr)
-    {
-        return array_key_exists($key, $arr);
-    }
+    
 
     public static function arrayCheck($key, $arr)
     {

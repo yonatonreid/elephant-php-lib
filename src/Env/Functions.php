@@ -31,4 +31,23 @@ class Functions
     public static function isScalar($val){
         return is_scalar($val);
     }
+
+    public static function isNull($val){
+        return is_null($val);
+    }
+
+    public static function isObject($obj){
+        return is_object($obj);
+    }
+
+    public static function destroyObject($object){
+        if (is_array($object)) {
+            foreach ($object as $obj) {
+                static::destroyObject($obj);
+            }
+        } else {
+            $object -> __destruct();
+            unset($object);
+        }
+    }
 }
